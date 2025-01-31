@@ -22,13 +22,15 @@ def get_rgb_components(hex_color):
 
 
 def generate_wallpaper(
-	hex_color, size, width=1920, height=1080,
+	hex_color, bg_hex_color,
+	size=110, width=1920, height=1080,
 	padding=10, gap=5,
 	output_image_path="wallpaper.png"
 ):
 	# Create a blank white image
 	color = get_rgb_components(hex_color)
-	image = Image.new("RGB", (width, height), color)
+	bg_color = get_rgb_components(bg_hex_color)
+	image = Image.new("RGB", (width, height), bg_color)
 	draw = ImageDraw.Draw(image)
 
 	# Calculate number of rectangles in each row and column
@@ -67,6 +69,7 @@ def main():
 	args = sys.argv[1:]
 
 	hex_color = "#6496C8"
+	bg_hex_color = None
 	size = 110
 	width=1920
 	height=1080
@@ -79,6 +82,7 @@ def main():
 			key = key.strip().upper()
 			match key:
 				case 'COLOR' | 'C': hex_color = value
+				case 'BACKGROUND' | 'BG': bg_hex_color = value
 				case 'SIZE' | 'S': size = int(value)
 				case 'HEIGHT' | 'H': height = int(value)
 				case 'WIDTH' | 'W': width = int(value)
@@ -87,6 +91,9 @@ def main():
 				case 'GAP': gap = int(value)
 				case _:
 					print(f"Unknown key: '{key}'")
+		elif arg.isnumeric():
+			height = int(arg)
+			width = height
 		else:
 			command = arg.upper()
 			match command:
@@ -99,9 +106,10 @@ def main():
 					print(f"Unknown command: '{command}'")
 
 
+	bg_hex_color = bg_hex_color or hex_color
 	generate_wallpaper(
-		hex_color, size,
-		width=width, height=height,
+		hex_color, bg_hex_color=bg_hex_color,
+		size=size, width=width, height=height,
 		padding=padding, gap=gap
 	)
 
