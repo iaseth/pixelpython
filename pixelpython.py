@@ -1,3 +1,4 @@
+import json
 import random
 import sys
 
@@ -5,9 +6,19 @@ from PIL import Image, ImageDraw
 
 
 
-def hex_to_rgb(hex_color):
-	hex_color = hex_color.lstrip("#")
-	return tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
+with open('colors.json') as f:
+	colors_json = json.load(f)
+	colors = colors_json['colors']
+
+
+def get_rgb_components(hex_color):
+	if hex_color.startswith("#"):
+		hex_color = hex_color.lstrip("#")
+		return tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
+	else:
+		for color in colors:
+			if color['name'].upper() == hex_color.upper():
+				return get_rgb_components(color['code'])
 
 
 def generate_wallpaper(
@@ -16,7 +27,7 @@ def generate_wallpaper(
 	output_image_path="wallpaper.png"
 ):
 	# Create a blank white image
-	color = hex_to_rgb(hex_color)
+	color = get_rgb_components(hex_color)
 	image = Image.new("RGB", (width, height), color)
 	draw = ImageDraw.Draw(image)
 
@@ -67,10 +78,11 @@ def main():
 			key, value = arg.split("=")
 			key = key.strip().upper()
 			match key:
-				case 'COLOR': hex_color = value
-				case 'SIZE': size = int(value)
-				case 'WIDTH' | 'W': width = int(value)
+				case 'COLOR' | 'C': hex_color = value
+				case 'SIZE' | 'S': size = int(value)
 				case 'HEIGHT' | 'H': height = int(value)
+				case 'WIDTH' | 'W': width = int(value)
+				case 'SQUARE' | 'SQ': height = width = int(value)
 				case 'PADDING': padding = int(value)
 				case 'GAP': gap = int(value)
 				case _:
