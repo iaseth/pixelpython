@@ -60,12 +60,16 @@ def generate_wallpaper(
 			
 			draw.rectangle([x1, y1, x2, y2], fill=shaded_color, outline=None)
 	
-	# Save the image
-	image.save(output_image_path)
-	print(f"Wallpaper generated and saved: {output_image_path}")
+	if output_image_path:
+		# Save the image
+		image.save(output_image_path)
+		print(f"Wallpaper generated and saved: {output_image_path}")
+	else:
+		image.show()
 
 
 def main():
+	random.seed(0)
 	args = sys.argv[1:]
 
 	color_string = "#6496C8"
@@ -75,6 +79,7 @@ def main():
 	height = 1080
 	padding = 0
 	gap = 10
+	output_image_path = None
 
 	for arg in args:
 		if "=" in arg:
@@ -89,6 +94,7 @@ def main():
 				case 'SQUARE' | 'SQ': height = width = int(value)
 				case 'PADDING': padding = int(value)
 				case 'GAP': gap = int(value)
+				case 'OUT': output_image_path = value
 				case _:
 					print(f"Unknown key: '{key}'")
 		elif arg.isnumeric():
@@ -105,12 +111,12 @@ def main():
 				case _:
 					print(f"Unknown command: '{command}'")
 
-
 	bg_color_string = bg_color_string or color_string
 	generate_wallpaper(
 		color_string, bg_color_string=bg_color_string,
 		size=size, width=width, height=height,
-		padding=padding, gap=gap
+		padding=padding, gap=gap,
+		output_image_path=output_image_path
 	)
 
 
