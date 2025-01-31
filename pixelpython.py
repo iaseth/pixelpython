@@ -11,25 +11,25 @@ with open('colors.json') as f:
 	colors = colors_json['colors']
 
 
-def get_rgb_components(hex_color):
-	if hex_color.startswith("#"):
-		hex_color = hex_color.lstrip("#")
-		return tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
+def get_rgb_components(color_string):
+	if color_string.startswith("#"):
+		color_string = color_string.lstrip("#")
+		return tuple(int(color_string[i:i+2], 16) for i in (0, 2, 4))
 	else:
 		for color in colors:
-			if color['name'].upper() == hex_color.upper():
+			if color['name'].upper() == color_string.upper():
 				return get_rgb_components(color['code'])
 
 
 def generate_wallpaper(
-	hex_color, bg_hex_color,
+	color_string, bg_color_string,
 	size=110, width=1920, height=1080,
 	padding=10, gap=5,
 	output_image_path="wallpaper.png"
 ):
 	# Create a blank white image
-	color = get_rgb_components(hex_color)
-	bg_color = get_rgb_components(bg_hex_color)
+	color = get_rgb_components(color_string)
+	bg_color = get_rgb_components(bg_color_string)
 	image = Image.new("RGB", (width, height), bg_color)
 	draw = ImageDraw.Draw(image)
 
@@ -68,11 +68,11 @@ def generate_wallpaper(
 def main():
 	args = sys.argv[1:]
 
-	hex_color = "#6496C8"
-	bg_hex_color = None
+	color_string = "#6496C8"
+	bg_color_string = None
 	size = 110
-	width=1920
-	height=1080
+	width = 1920
+	height = 1080
 	padding = 0
 	gap = 10
 
@@ -81,8 +81,8 @@ def main():
 			key, value = arg.split("=")
 			key = key.strip().upper()
 			match key:
-				case 'COLOR' | 'C': hex_color = value
-				case 'BACKGROUND' | 'BG': bg_hex_color = value
+				case 'COLOR' | 'C': color_string = value
+				case 'BACKGROUND' | 'BG': bg_color_string = value
 				case 'SIZE' | 'S': size = int(value)
 				case 'HEIGHT' | 'H': height = int(value)
 				case 'WIDTH' | 'W': width = int(value)
@@ -106,9 +106,9 @@ def main():
 					print(f"Unknown command: '{command}'")
 
 
-	bg_hex_color = bg_hex_color or hex_color
+	bg_color_string = bg_color_string or color_string
 	generate_wallpaper(
-		hex_color, bg_hex_color=bg_hex_color,
+		color_string, bg_color_string=bg_color_string,
 		size=size, width=width, height=height,
 		padding=padding, gap=gap
 	)
