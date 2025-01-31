@@ -3,6 +3,8 @@
 
 This Python script generates a wallpaper with evenly sized rectangular patterns. The rectangles are all shades of a specified base color and are arranged to cover the entire image with optional padding and gaps.
 
+![Red-4k](https://github.com/iaseth/pixelpython/blob/master/samples/red-4k.png?raw=true)
+
 ## Requirements
 - Python 3.x
 - Pillow (PIL)
