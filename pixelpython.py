@@ -50,25 +50,25 @@ def main():
 					height = max(height, width)
 					width = height
 
-				case 'RECTANGLE': template = 'RECTANGLE'
-				case 'TRIANGLE': template = 'TRIANGLE'
-				case 'HEXAGON': template = 'HEXAGON'
+				case 'RECTANGLE' | 'T4': template = 'RECTANGLE'
+				case 'TRIANGLE' | 'T3': template = 'TRIANGLE'
+				case 'HEXAGON' | 'T6': template = 'HEXAGON'
 
 				case _:
 					print(f"Unknown command: '{command}'")
 
 	bg_color_string = bg_color_string or color_string
 	match template:
-		case 'RECTANGLE' | 'T4':
+		case 'RECTANGLE':
 			generate_rectangle_wallpaper(
 				color_string, bg_color_string=bg_color_string,
 				size=size, width=width, height=height,
 				padding=padding, gap=gap,
 				output_image_path=output_image_path
 			)
-		case 'TRIANGLE' | 'T3':
+		case 'TRIANGLE':
 			generate_triangle_wallpaper(image_size=(width, height), triangle_size=size, color_string=color_string)
-		case 'HEXAGON' | 'T6':
+		case 'HEXAGON':
 			generate_hexagon_wallpaper(image_size=(width, height), hex_size=size, color_string=color_string)
 		case _:
 			print(f"Unknown template: '{template}'")
