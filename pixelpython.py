@@ -2,6 +2,7 @@ import random
 import sys
 
 from PIL import Image, ImageDraw
+from pypixel.triangle import generate_triangle_wallpaper
 from pypixel.utils import get_rgb_components
 
 
@@ -57,6 +58,7 @@ def main():
 	random.seed(0)
 	args = sys.argv[1:]
 
+	template = "DEFAULT"
 	color_string = "#6496C8"
 	bg_color_string = None
 	size = 110
@@ -93,16 +95,24 @@ def main():
 				case 'SQUARE':
 					height = max(height, width)
 					width = height
+				case 'TRIANGLE':
+					template = 'TRIANGLE'
 				case _:
 					print(f"Unknown command: '{command}'")
 
 	bg_color_string = bg_color_string or color_string
-	generate_wallpaper(
-		color_string, bg_color_string=bg_color_string,
-		size=size, width=width, height=height,
-		padding=padding, gap=gap,
-		output_image_path=output_image_path
-	)
+	match template:
+		case 'DEFAULT':
+			generate_wallpaper(
+				color_string, bg_color_string=bg_color_string,
+				size=size, width=width, height=height,
+				padding=padding, gap=gap,
+				output_image_path=output_image_path
+			)
+		case 'TRIANGLE':
+			generate_triangle_wallpaper(image_size=(width, height), triangle_size=size, color_string=color_string)
+		case _:
+			print(f"Unknown template: '{template}'")
 
 
 if __name__ == "__main__":
