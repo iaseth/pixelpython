@@ -2,9 +2,7 @@ import random
 import sys
 
 from PIL import Image, ImageDraw
-from pypixel.triangle import generate_triangle_wallpaper
-from pypixel.hexagon import generate_hexagon_wallpaper
-from pypixel.utils import get_rgb_components
+from pypixel import generate_triangle_wallpaper, generate_hexagon_wallpaper, get_rgb_components
 
 
 
