@@ -3,6 +3,7 @@ import sys
 
 from PIL import Image, ImageDraw
 from pypixel.triangle import generate_triangle_wallpaper
+from pypixel.hexagon import generate_hexagon_wallpaper
 from pypixel.utils import get_rgb_components
 
 
@@ -97,6 +98,8 @@ def main():
 					width = height
 				case 'TRIANGLE':
 					template = 'TRIANGLE'
+				case 'HEXAGON':
+					template = 'HEXAGON'
 				case _:
 					print(f"Unknown command: '{command}'")
 
@@ -111,6 +114,8 @@ def main():
 			)
 		case 'TRIANGLE':
 			generate_triangle_wallpaper(image_size=(width, height), triangle_size=size, color_string=color_string)
+		case 'HEXAGON':
+			generate_hexagon_wallpaper(image_size=(width, height), hex_size=size, color_string=color_string)
 		case _:
 			print(f"Unknown template: '{template}'")
 
