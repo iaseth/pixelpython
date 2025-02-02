@@ -7,7 +7,6 @@ from pypixel import generate_rectangle_wallpaper, generate_triangle_wallpaper, g
 
 
 def main():
-	random.seed(0)
 	args = sys.argv[1:]
 
 	template = "RECTANGLE"
@@ -18,6 +17,7 @@ def main():
 	height = 1080
 	padding = 0
 	gap = 10
+	seed = 0
 	output_image_path = None
 
 	for arg in args:
@@ -33,6 +33,7 @@ def main():
 				case 'SQUARE' | 'SQ': height = width = int(value)
 				case 'PADDING': padding = int(value)
 				case 'GAP': gap = int(value)
+				case 'SEED': seed = int(value)
 				case 'OUT': output_image_path = value
 				case _:
 					print(f"Unknown key: '{key}'")
@@ -42,10 +43,9 @@ def main():
 		else:
 			command = arg.upper()
 			match command:
-				case '4K':
-					height, width = 2160, 3840
-				case '8K':
-					height, width = 4320, 7680
+				case '20:9': height, width = 3200, 1440
+				case '4K': height, width = 2160, 3840
+				case '8K': height, width = 4320, 7680
 				case 'SQUARE':
 					height = max(height, width)
 					width = height
@@ -57,6 +57,7 @@ def main():
 				case _:
 					print(f"Unknown command: '{command}'")
 
+	random.seed(seed)
 	bg_color_string = bg_color_string or color_string
 	match template:
 		case 'RECTANGLE':
@@ -67,9 +68,11 @@ def main():
 				output_image_path=output_image_path
 			)
 		case 'TRIANGLE':
-			generate_triangle_wallpaper(image_size=(width, height), triangle_size=size, color_string=color_string)
+			generate_triangle_wallpaper(image_size=(width, height), triangle_size=size, color_string=color_string,
+				output_image_path=output_image_path)
 		case 'HEXAGON':
-			generate_hexagon_wallpaper(image_size=(width, height), hex_size=size, color_string=color_string)
+			generate_hexagon_wallpaper(image_size=(width, height), hex_size=size, color_string=color_string,
+				output_image_path=output_image_path)
 		case _:
 			print(f"Unknown template: '{template}'")
 

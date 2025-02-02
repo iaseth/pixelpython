@@ -1,7 +1,7 @@
 from PIL import Image, ImageDraw
 import random
 
-from .utils import get_rgb_components
+from .utils import get_rgb_components, save_or_show_image
 
 
 
@@ -43,12 +43,7 @@ def generate_rectangle_wallpaper(
 			)
 			
 			draw.rectangle([x1, y1, x2, y2], fill=shaded_color, outline=None)
-	
-	if output_image_path:
-		# Save the image
-		image.save(output_image_path)
-		print(f"Wallpaper generated and saved: {output_image_path}")
-	else:
-		image.show()
+
+	save_or_show_image(image, output_image_path)
 
 

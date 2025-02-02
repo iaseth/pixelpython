@@ -1,11 +1,14 @@
 from PIL import Image, ImageDraw
 import random
 
-from .utils import get_rgb_components
+from .utils import get_rgb_components, save_or_show_image
 
 
 
-def generate_hexagon_wallpaper(image_size=(1080, 1080), hex_size=100, color_string="red"):
+def generate_hexagon_wallpaper(
+	image_size=(1080, 1080), hex_size=100, color_string="red",
+	output_image_path="wallpaper.png"
+):
 	base_color = get_rgb_components(color_string)
 	img = Image.new("RGB", image_size, base_color)
 	draw = ImageDraw.Draw(img)
@@ -34,7 +37,6 @@ def generate_hexagon_wallpaper(image_size=(1080, 1080), hex_size=100, color_stri
 			# Draw the hexagon
 			draw.polygon(hexagon, fill=color)
 
-	img.show()
-	img.save("hexagon_wallpaper.png")
+	save_or_show_image(img, output_image_path)
 
 

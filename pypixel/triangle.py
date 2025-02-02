@@ -1,11 +1,14 @@
 from PIL import Image, ImageDraw
 import random
 
-from .utils import get_rgb_components
+from .utils import get_rgb_components, save_or_show_image
 
 
 
-def generate_triangle_wallpaper(image_size=(3840, 2160), triangle_size=100, color_string="red"):
+def generate_triangle_wallpaper(
+	image_size=(3840, 2160), triangle_size=100, color_string="red",
+	output_image_path="wallpaper.png"
+):
 	base_color = get_rgb_components(color_string)
 	img = Image.new("RGB", image_size, base_color)
 	draw = ImageDraw.Draw(img)
@@ -32,7 +35,6 @@ def generate_triangle_wallpaper(image_size=(3840, 2160), triangle_size=100, colo
 			draw.polygon(triangle1, fill=color)
 			draw.polygon(triangle2, fill=color2)
 
-	img.show()
-	img.save("triangle_wallpaper.png")
+	save_or_show_image(img, output_image_path)
 
 
