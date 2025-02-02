@@ -44,6 +44,8 @@ def main():
 			match command:
 				case '4K':
 					height, width = 2160, 3840
+				case '8K':
+					height, width = 4320, 7680
 				case 'SQUARE':
 					height = max(height, width)
 					width = height
@@ -57,16 +59,16 @@ def main():
 
 	bg_color_string = bg_color_string or color_string
 	match template:
-		case 'RECTANGLE':
+		case 'RECTANGLE' | 'T4':
 			generate_rectangle_wallpaper(
 				color_string, bg_color_string=bg_color_string,
 				size=size, width=width, height=height,
 				padding=padding, gap=gap,
 				output_image_path=output_image_path
 			)
-		case 'TRIANGLE':
+		case 'TRIANGLE' | 'T3':
 			generate_triangle_wallpaper(image_size=(width, height), triangle_size=size, color_string=color_string)
-		case 'HEXAGON':
+		case 'HEXAGON' | 'T6':
 			generate_hexagon_wallpaper(image_size=(width, height), hex_size=size, color_string=color_string)
 		case _:
 			print(f"Unknown template: '{template}'")
