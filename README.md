@@ -3,7 +3,10 @@
 
 This Python script generates a wallpaper with evenly sized rectangular patterns. The rectangles are all shades of a specified base color and are arranged to cover the entire image with optional padding and gaps.
 
-![Red-4k](https://github.com/iaseth/pixelpython/blob/master/samples/red-4k.png?raw=true)
+![mobile-triangles-blue.png](https://github.com/iaseth/pixelpython/blob/master/samples/mobile-triangles-blue.png?raw=true)
+![mobile-red.png](https://github.com/iaseth/pixelpython/blob/master/samples/mobile-red.png?raw=true)
+![mobile-green.png](https://github.com/iaseth/pixelpython/blob/master/samples/mobile-green.png?raw=true)
+![mobile-blue.png](https://github.com/iaseth/pixelpython/blob/master/samples/mobile-blue.png?raw=true)
 
 ## Requirements
 - Python 3.x
